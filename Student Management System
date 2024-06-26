@@ -1,0 +1,141 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+void addRecord(vector<string> names, vector<int> grades, vector<string> subjects);
+void printRecord(vector<string> names, vector<int> grades, vector<string> subjects);
+void updateRecord(vector<string> names, vector<int> grades, vector<string> subjects);
+void deleteRecord(vector<string> names, vector<int> grades, vector<string> subjects);
+
+int main() {
+    vector<string> studentNames;
+    vector<int> studentGrades;
+    vector<string> studentSubjects;
+    int choice;
+
+    do {
+        cout << "Student Management System:" << endl;
+        cout << "1. Add Record" << endl;
+        cout << "2. Print Records" << endl;
+        cout << "3. Update Record" << endl;
+        cout << "4. Delete Record" << endl;
+        cout << "5. Clear Records" << endl;
+        cout << "6. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                addRecord(studentNames, studentGrades, studentSubjects);
+                break;
+            case 2:
+                printRecord(studentNames, studentGrades, studentSubjects);
+                break;
+            case 3:
+                updateRecord(studentNames, studentGrades, studentSubjects);
+                break;
+            case 4:
+                deleteRecord(studentNames, studentGrades, studentSubjects);
+                break;
+            case 5:
+                studentNames.clear();
+                studentGrades.clear();
+                studentSubjects.clear();
+                cout << "All records cleared." << endl;
+                break;
+            case 6:
+                cout << "Exiting the program." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+    } while (choice != 6);
+
+    return 0;
+}
+
+void addRecord(vector<string> names, vector<int> grades, vector<string> subjects) {
+    string name, subject;
+    int grade;
+
+    cout << "Enter student's name: ";
+    cin>>name;
+    cout << "Enter student's grade: ";
+    cin >> grade;
+    cout << "Enter student's subject: ";
+    cin>>subject;
+    names.push_back(name);
+    grades.push_back(grade);
+    subjects.push_back(subject);
+
+    cout << "Record added successfully!" << endl;
+}
+
+void printRecord(vector<string> names, vector<int> grades, vector<string> subjects) {
+    if (names.empty()) {
+        cout << "No records to display." << endl;
+        return;
+    }
+
+    cout << "Student Records:" << endl;
+    for (size_t i = 0; i < names.size(); ++i) {
+        cout << i + 1 << ". Name: " << names[i] << ", Grade: " << grades[i] << ", Subject: " << subjects[i] << endl;
+    }
+}
+
+void updateRecord(vector<string> names, vector<int> grades, vector<string> subjects) {
+    if (names.empty()) {
+        cout << "No records to update." << endl;
+        return;
+    }
+
+    size_t index;
+    cout << "Enter record number to update: ";
+    cin >> index;
+
+   if (index < 1 || index > names.size()) {
+        cout << "Invalid record number!" << endl;
+        return;
+		    }
+
+    --index; // Convert to zero-based index
+    string name, subject;
+    int grade;
+
+    cout << "Enter new name: ";
+    cin>>name;
+    cout << "Enter new grade: ";
+    cin >> grade;
+    cout << "Enter new subject: ";
+    cin>>subject;
+
+    names[index] = name;
+    grades[index] = grade;
+    subjects[index] = subject;
+
+    cout << "Record updated successfully!" << endl;
+}
+
+void deleteRecord(vector<string> names, vector<int> grades, vector<string> subjects) {
+    if (names.empty()) {
+        cout << "No records to delete." << endl;
+        return;
+    }
+
+    size_t index;
+    cout << "Enter record number to delete: ";
+    cin >> index;
+
+    if (index < 1 || index > names.size()) {
+        cout << "Invalid record number!" << endl;
+        return;
+    }
+	 --index; 
+	names.erase(names.begin() + index);
+    grades.erase(grades.begin() + index);
+    subjects.erase(subjects.begin() + index);
+
+    cout << "Record deleted successfully!" << endl;
+}
